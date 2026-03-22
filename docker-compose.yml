@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # 1. Backend-palvelin (PHP + Apache)
+  backend:
+    image: php:8.2-apache
+    ports:
+      - "8080:80" # Yhdistää selaimesi portin 8080 kontin porttiin 80
+    volumes:
+      - ./backend:/var/www/html # Linkittää paikallisen kansion kontin sisälle
+    restart: always
+
+  # 2. Frontend-ympäristö (Node.js Vuea/Reactia varten)
+  frontend:
+    image: node:20
+    working_dir: /app
+    ports:
+      - "3000:3000" # Reactin/Vuen yleisin oletusportti
+    volumes:
+      - ./frontend:/app
+    # Tämä pitää kontin käynnissä, kunnes asennamme varsinaisen frameworkin
+    command: npm run dev
