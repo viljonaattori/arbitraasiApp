@@ -1,13 +1,13 @@
-version: '3.8'
-
 services:
-  # 1. Backend-palvelin (PHP + Apache)
   backend:
     image: php:8.2-apache
     ports:
-      - "8080:80" # Yhdistää selaimesi portin 8080 kontin porttiin 80
+      - "8080:80"
     volumes:
-      - ./backend:/var/www/html # Linkittää paikallisen kansion kontin sisälle
+      - ./backend:/var/www/html
+    # Tässä on se ratkaiseva muutos:
+    env_file:
+      - .env
     restart: always
 
   # 2. Frontend-ympäristö (Node.js Vuea/Reactia varten)
